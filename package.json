@@ -1,0 +1,28 @@
+{
+    "name": "crypto-util",
+    "version": "1.0.0",
+    "description": "",
+    "main": "crypto-cli.js",
+    "bin": {
+        "crypto-cli": "./crypto-cli.js"
+    },
+    "scripts": {
+        "start": "node crypto-cli.js",
+        "build": "pkg ."
+    },
+    "dependencies": {
+        "commander": "^8.3.0"
+    },
+    "devDependencies": {
+        "pkg": "^5.8.1"
+    },
+    "pkg": {
+        "targets": [
+            "node16-win-x64"
+        ],
+        "scripts": "crypto-cli.js",
+        "outputPath": "dist"
+    },
+    "author": "Samuel J Mathew<samuelj90@gmail.com>",
+    "license": "ISC"
+}
