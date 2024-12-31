@@ -5,6 +5,7 @@ A Utility to execute cryptographic operations such as encryption, decryption, an
 ## Features
 
 - AES Encryption and Decryption (AES-256-CBC)
+- PBEWITHHMACSHA512ANDAES_128 Encryption and Decrytion
 - RSA Encryption and Decryption
 - Hashing (SHA-256, SHA-512, etc.)
 
@@ -21,6 +22,7 @@ npm install
 ### Encryption Algorithms
 - AES-256-CBC
 - RSA
+- PBE
 
 ### Hashing Algorithms
 - SHA-256
@@ -29,19 +31,19 @@ npm install
 ### Encrypt a message
 
 ```sh
-npm run start encrypt -- -p <password> -m <message> -a <algorithm> -k <key>
+npm  start encrypt -- -p <password> -m <message> -a <algorithm> -k <key>
 ```
 
 ### Decrypt a message
 
 ```sh
-npm run start decrypt -- -p <password> -d <data> -a <algorithm> -k <key>
+npm start decrypt -- -p <password> -d <data> -a <algorithm> -k <key>
 ```
 
 ### Generate a hash
 
 ```sh
-npm run start hash -- -s <string> -a <algorithm>
+npm  start hash -- -s <string> -a <algorithm>
 ```
 
 ## Build

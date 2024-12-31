@@ -72,6 +72,29 @@ function hash(input, algorithm = 'sha256') {
     return hash.digest('hex');
 }
 
+// PBE Encryption function
+function encryptPBE(plaintext, password) {
+    const salt = crypto.randomBytes(16);
+    const iv = crypto.randomBytes(16);
+    const key = crypto.pbkdf2Sync(password, salt, 1000, 32, 'sha512');
+    const cipher = crypto.createCipheriv('aes-128-cbc', key.subarray(0, 16), iv);
+    let encrypted = cipher.update(plaintext, 'utf8', 'base64');
+    encrypted += cipher.final('base64');
+    return `${salt.toString('base64')}:${iv.toString('base64')}:${encrypted}`;
+}
+
+// PBE Decryption function
+function decryptPBE(encryptedData, password) {
+    const [salt, iv, ciphertext] = encryptedData.split(':');
+    const saltBuffer = Buffer.from(salt, 'base64');
+    const ivBuffer = Buffer.from(iv, 'base64');
+    const key = crypto.pbkdf2Sync(password, saltBuffer, 1000, 32, 'sha512');
+    const decipher = crypto.createDecipheriv('aes-128-cbc', key.subarray(0, 16), ivBuffer);
+    let decrypted = decipher.update(ciphertext, 'base64', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
+
 // Command-line interface logic using commander.js
 program
     .name('crypto-cli')
@@ -106,6 +129,8 @@ program
                 publicKey = decodeBase64Key(options.key);
             }
             encryptedData = encryptRSA(options.message, publicKey);
+        }  else if (options.algorithm === 'pbe') {
+            encryptedData = encryptPBE(options.message, options.password);
         } else {
             console.error('Unsupported encryption algorithm!');
             process.exit(1);
@@ -144,6 +169,8 @@ program
                 }
 
                 decryptedMessage = decryptRSA(options.data, privateKey);
+            } else if (options.algorithm === 'pbe') {
+                decryptedMessage = decryptPBE(encryptedData, options.password);
             } else {
                 console.error('Unsupported decryption algorithm!');
                 process.exit(1);
