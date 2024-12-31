@@ -27,6 +27,15 @@ jobs:
     - name: Build project
       run: npm run build
 
+    - name: Delete existing release if it exists
+      run: |
+        TAG_NAME=${GITHUB_REF#refs/tags/}
+        if gh release view $TAG_NAME; then
+          gh release delete $TAG_NAME -y
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
