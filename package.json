@@ -8,7 +8,8 @@
     },
     "scripts": {
         "start": "node crypto-cli.js",
-        "build": "pkg ."
+        "build": "pkg .",
+        "test": "node --test"
     },
     "dependencies": {
         "commander": "^8.3.0"
@@ -24,5 +25,5 @@
         "outputPath": "dist"
     },
     "author": "Samuel J Mathew<samuelj90@gmail.com>",
-    "license": "ISC"
+    "license": "MIT"
 }

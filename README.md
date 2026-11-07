@@ -1,68 +1,67 @@
-# crypto-util
+# Crypto Util
 
-A Utility to execute cryptographic operations such as encryption, decryption, and hashing using various algorithms.
+> A lightweight CLI utility for symmetric encryption, asymmetric keypair operations, and deterministic hashing.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/samuelj90/crypto-util/actions/workflows/ci.yml/badge.svg)](https://github.com/samuelj90/crypto-util/actions/workflows/ci.yml)
+
+---
+
+## Architecture Overview
+
+```mermaid
+graph LR
+    Input[Plaintext / File] --> CLI[crypto-cli]
+    CLI --> AES[AES-256-CBC Module]
+    CLI --> PBE[PBE-HMAC-SHA512 Module]
+    CLI --> RSA[RSA Asymmetric Module]
+    CLI --> HASH[SHA-256 / SHA-512 Stream]
+    AES --> Output[Encrypted Ciphertext / Hash]
+    PBE --> Output
+    RSA --> Output
+    HASH --> Output
+```
+
+---
 
 ## Features
 
-- AES Encryption and Decryption (AES-256-CBC)
-- PBEWITHHMACSHA512ANDAES_128 Encryption and Decrytion
-- RSA Encryption and Decryption
-- Hashing (SHA-256, SHA-512, etc.)
+- **AES-256-CBC**: Symmetric encryption and decryption with initialization vectors.
+- **PBEWithHMACSHA512AndAES_128**: Password-based key derivation encryption.
+- **RSA**: Public key encryption and private key decryption.
+- **Hashing**: Deterministic cryptographic digests using SHA-256 and SHA-512.
 
-## Installation
+---
 
-To install the dependencies, run:
+## Installation & Setup
 
-```sh
+```bash
+# Clone the repository
+git clone https://github.com/samuelj90/crypto-util.git
+cd crypto-util
+
+# Install dependencies
 npm install
 ```
 
-## Supported Algorithms
+---
 
-### Encryption Algorithms
-- AES-256-CBC
-- RSA
-- PBE
+## Verification & Testing
 
-### Hashing Algorithms
-- SHA-256
-- SHA-512
+Run the deterministic test suite:
 
-### Encrypt a message
-
-```sh
-npm  start encrypt -- -p <password> -m <message> -a <algorithm> -k <key>
+```bash
+npm test
 ```
 
-### Decrypt a message
+---
 
-```sh
-npm start decrypt -- -p <password> -d <data> -a <algorithm> -k <key>
-```
+## Security
 
-### Generate a hash
+Please report vulnerabilities following our [Security Policy](SECURITY.md).
 
-```sh
-npm  start hash -- -s <string> -a <algorithm>
-```
-
-## Build
-
-
-To build the project, run:
-
-```sh
-npm run build
-```
-
-This will create a standalone executable in the [dist](./dist/) folder
-
-## Release
-
-
-To release the [dist](./dist/)folder using CI, push a new tag that matches the pattern `v*.*.*` (e.g., `v1.0.0`). The GitHub Actions workflow will automatically create a release and upload the [dist](./dist/) folder as an artifact.
+---
 
 ## License
 
-
-This project is licensed under the ISC License.
+[MIT License](LICENSE)
